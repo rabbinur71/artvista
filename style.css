@@ -72,6 +72,14 @@ header {
     font-size: 1.8rem;
     font-weight: 600;
     color: var(--charcoal);
+    display: inline-block; /* Ensures proper clickable area */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+    text-decoration: none; /* Removes underline */
+}
+
+.logo:hover span {
+    color: var(--mustard); /* Changes gold color on hover */
+    transition: color 0.3s ease;
 }
 
 .logo span {
