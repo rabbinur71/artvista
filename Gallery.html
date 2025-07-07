@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtVista Gallery | Collections</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Open+Sans:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --cream: #fffbe6;
+            --charcoal: #3b2f2f;
+            --gold: #d4a017;
+            --terracotta: #8b5e3c;
+            --gray: #e8e8e8;
+            --mustard: #f5e050;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+            padding-top: 80px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Lora', serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Header (Consistent with Welcome Page) */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(255, 251, 230, 0.95);
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            font-weight: 600;
+            position: relative;
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover:after {
+            width: 100%;
+        }
+
+        /* Gallery Main Content */
+        .gallery-hero {
+            background: linear-gradient(rgba(59, 47, 47, 0.8), rgba(59, 47, 47, 0.8)), 
+                        url('https://images.unsplash.com/photo-1600566752355-35792bedcfea?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .gallery-hero h1 {
+            font-size: 3rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Filter Controls */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            padding: 0 5%;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            background: transparent;
+            border: 2px solid var(--terracotta);
+            color: var(--terracotta);
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--terracotta);
+            color: white;
+        }
+
+        /* Artwork Grid */
+        .artwork-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 0 5% 5rem;
+        }
+
+        .artwork-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .artwork-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .artwork-img-container {
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .artwork-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .artwork-card:hover .artwork-img {
+            transform: scale(1.05);
+        }
+
+        .artwork-info {
+            padding: 1.5rem;
+        }
+
+        .artwork-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+            color: var(--charcoal);
+        }
+
+        .artwork-artist {
+            color: var(--terracotta);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .artwork-medium {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 0.5rem;
+        }
+
+        .artwork-price {
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .artwork-price span {
+            color: var(--terracotta);
+            font-size: 0.9rem;
+        }
+
+        .btn-viewing {
+            display: inline-block;
+            width: 100%;
+            padding: 0.7rem;
+            background-color: var(--gold);
+            color: var(--charcoal);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-viewing:hover {
+            background-color: var(--mustard);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--charcoal);
+            color: var(--gray);
+            padding: 3rem 10%;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            font-size: 1.2rem;
+            color: var(--gold);
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--mustard);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .gallery-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .artwork-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+
+        @media (max-width: 576px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .logo {
+                margin-bottom: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .gallery-hero {
+                height: 200px;
+            }
+
+            .filters {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">Art<span>Vista</span></div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Welcome</a></li>
+                <li><a href="Gallery.html">Gallery</a></li>
+                <li><a href="Our Story.html">Our Story</a></li>
+                <li><a href="Connect.html">Connect</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Gallery Hero -->
+    <section class="gallery-hero">
+        <h1>Curated Collections</h1>
+    </section>
+
+    <!-- Filter Controls -->
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">All Works</button>
+        <button class="filter-btn" data-filter="painting">Paintings</button>
+        <button class="filter-btn" data-filter="sculpture">Sculptures</button>
+        <button class="filter-btn" data-filter="digital">Digital</button>
+    </div>
+
+    <!-- Artwork Grid -->
+    <div class="artwork-grid">
+        <!-- Painting 1 -->
+        <div class="artwork-card" data-category="painting">
+            <div class="artwork-img-container">
+                <img src="whispers-of-dawn-main.jpg" alt="Whispers of Dawn by Evelyn Hamilton" class="artwork-img">
+            </div>
+            <div class="artwork-info">
+                <h3 class="artwork-title">Whispers of Dawn</h3>
+                <span class="artwork-artist">Evelyn Hamilton</span>
+                <p class="artwork-medium">Acrylic on Linen | 2024</p>
+                <p class="artwork-price">$2,800 <span>(≈ ৳302,400)</span></p>
+                <button class="btn-book" onclick="openBookingForm('Whispers of Dawn')">Book a Private Viewing</button>
+            </div>
+        </div>
+
+        <!-- Sculpture 1 -->
+        <div class="artwork-card" data-category="sculpture">
+            <div class="artwork-img-container">
+                <img src="https://images.unsplash.com/photo-1569936784021-ae78e11cd345?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Eternal Balance by Hiroshi Tanaka" class="artwork-img">
+            </div>
+            <div class="artwork-info">
+                <h3 class="artwork-title">Eternal Balance</h3>
+                <span class="artwork-artist">Hiroshi Tanaka</span>
+                <p class="artwork-medium">Bronze Sculpture | 2023</p>
+                <p class="artwork-price">$8,500 <span>(≈ ৳918,000)</span></p>
+                <button class="btn-viewing">Book a Viewing</button>
+            </div>
+        </div>
+
+        <!-- Digital 1 -->
+        <div class="artwork-card" data-category="digital">
+            <div class="artwork-img-container">
+                <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Neon Dreams by Aisha Johnson" class="artwork-img">
+            </div>
+            <div class="artwork-info">
+                <h3 class="artwork-title">Neon Dreams</h3>
+                <span class="artwork-artist">Aisha Johnson</span>
+                <p class="artwork-medium">Digital Art | 2024</p>
+                <p class="artwork-price">$750 <span>(≈ ৳81,000)</span></p>
+                <button class="btn-viewing">Book a Viewing</button>
+            </div>
+        </div>
+
+        <!-- Painting 2 -->
+        <div class="artwork-card" data-category="painting">
+            <div class="artwork-img-container">
+                <img src="https://images.unsplash.com/photo-1531913764164-f85c52e6e654?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Verdant Valley by Marcus Chen" class="artwork-img">
+            </div>
+            <div class="artwork-info">
+                <h3 class="artwork-title">Verdant Valley</h3>
+                <span class="artwork-artist">Marcus Chen</span>
+                <p class="artwork-medium">Oil on Canvas | 2022</p>
+                <p class="artwork-price">$3,400 <span>(≈ ৳367,200)</span></p>
+                <button class="btn-viewing">Book a Viewing</button>
+            </div>
+        </div>
+
+        <!-- Sculpture 2 -->
+        <div class="artwork-card" data-category="sculpture">
+            <div class="artwork-img-container">
+                <img src="https://images.unsplash.com/photo-1591291621160-26a4c4c7a58a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Marble Contemplation by Sofia Petrov" class="artwork-img">
+            </div>
+            <div class="artwork-info">
+                <h3 class="artwork-title">Marble Contemplation</h3>
+                <span class="artwork-artist">Sofia Petrov</span>
+                <p class="artwork-medium">Carrara Marble | 2021</p>
+                <p class="artwork-price">$12,000 <span>(≈ ৳1,296,000)</span></p>
+                <button class="btn-viewing">Book a Viewing</button>
+            </div>
+        </div>
+
+        <!-- Digital 2 -->
+        <div class="artwork-card" data-category="digital">
+            <div class="artwork-img-container">
+                <img src="https://images.unsplash.com/photo-1551269901-5c5e14c25df7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Data Tapestry by Ryan Park" class="artwork-img">
+            </div>
+            <div class="artwork-info">
+                <h3 class="artwork-title">Data Tapestry</h3>
+                <span class="artwork-artist">Ryan Park</span>
+                <p class="artwork-medium">Generative Art | 2023</p>
+                <p class="artwork-price">$950 <span>(≈ ৳102,600)</span></p>
+                <button class="btn-viewing">Book a Viewing</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+        </div>
+        <p class="copyright">© 2025 ArtVista Gallery. All rights reserved.</p>
+    </footer>
+
+    <!-- Basic Filter Functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const artworkCards = document.querySelectorAll('.artwork-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active button
+                    filterBtns.forEach(btn => btn.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // Filter artworks
+                    const filter = btn.dataset.filter;
+                    artworkCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+    <script>
+    // Auto-filter based on URL parameter
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const filter = urlParams.get('category');
+        
+        if (filter) {
+            // Trigger the filter button click
+            document.querySelector(`.filter-btn[data-filter="${filter}"]`).click();
+            
+            // Smooth scroll to gallery section
+            setTimeout(() => {
+                document.querySelector('.artwork-grid').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+            }, 300);
+        }
+    });
+    </script>
+    <div id="artwork-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        
+        <div class="artwork-gallery">
+            <div class="main-image">
+                <img id="modal-main-img" src="whispers-of-dawn-main.jpg" 
+                     alt="Whispers of Dawn by Evelyn Hamilton">
+            </div>
+            <div class="thumbnail-container">
+                <img class="thumbnail active" 
+                     src="whispers-of-dawn-main.jpg" 
+                     onclick="changeImage(this, 'whispers-of-dawn-main.jpg')">
+                <img class="thumbnail" 
+                     src="whispers-of-dawn-g1.jpg" 
+                     onclick="changeImage(this, 'whispers-of-dawn-g1.jpg')">
+                <img class="thumbnail" 
+                     src="whispers-of-dawn-g2.jpg" 
+                     onclick="changeImage(this, 'whispers-of-dawn-g2.jpg')">
+            </div>
+        </div>
+        
+        <div class="artwork-details">
+            <h2>Whispers of Dawn</h2>
+            <p class="artist">Evelyn Hamilton</p>
+            <p class="description">Whispers of Dawn is a beautifully textured painting that captures the serene elegance of flying birds against a radiant sunrise. The soft blues and warm gold tones flow together, suggesting the early light of dawn breaking over a tranquil landscape. The brushstrokes are expressive and layered, adding depth and movement to the scene and evoking a peaceful and almost dreamlike atmosphere.</p>
+            
+            <div class="specs">
+                <p><strong>Type:</strong> Unique Work</p>
+                <p><strong>Category:</strong> Paintings</p>
+                <p><strong>Size:</strong> 100 x 120 cm (hxb)</p>
+                <p><strong>Material:</strong> Acrylic, modeling paste, gesso</p>
+                <p><strong>Surface:</strong> High quality linen canvas on aluminum frame</p>
+                <p><strong>Edition:</strong> 1</p>
+                <p><strong>Availability:</strong> Available</p>
+                <p><strong>Sides:</strong> Painted dark brown/red</p>
+            </div>
+            
+            <button class="btn-book" onclick="openBookingForm('Whispers of Dawn')">Book a Private Viewing</button>
+        </div>
+    </div>
+</div>
+<div id="booking-modal" class="modal">
+    <div class="modal-content booking-form">
+        <span class="close-modal">&times;</span>
+        <h2>Book a Viewing</h2>
+        <p id="booking-artwork-title">For: <span>Whispers of Dawn</span></p>
+        
+        <form id="booking-form">
+            <div class="form-group">
+                <label for="booking-name">Full Name</label>
+                <input type="text" id="booking-name" required>
+            </div>
+            <div class="form-group">
+                <label for="booking-email">Email</label>
+                <input type="email" id="booking-email" required>
+            </div>
+            <div class="form-group">
+                <label for="booking-phone">Phone</label>
+                <input type="tel" id="booking-phone">
+            </div>
+            <div class="form-group">
+                <label for="booking-date">Preferred Date</label>
+                <input type="date" id="booking-date" required>
+            </div>
+            <div class="form-group">
+                <label for="booking-time">Preferred Time</label>
+                <select id="booking-time" required>
+                    <option value="">Select time</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="booking-notes">Special Requests</label>
+                <textarea id="booking-notes"></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Submit Booking Request</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Modal functionality
+    function openArtworkModal() {
+        document.getElementById('artwork-modal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function openBookingForm(artworkTitle) {
+        document.getElementById('booking-artwork-title').querySelector('span').textContent = artworkTitle;
+        document.getElementById('booking-modal').style.display = 'block';
+        document.getElementById('artwork-modal').style.display = 'none'; // Close artwork modal
+        document.body.style.overflow = 'hidden';
+        
+        // Set today's date as minimum booking date
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('booking-date').min = today;
+    }
+    
+    function closeModal() {
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.style.display = 'none';
+        });
+        document.body.style.overflow = 'auto';
+    }
+    
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', function() {
+        // Close modals
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', closeModal);
+        });
+        
+        // Click outside to close
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+        });
+        
+        // Artwork card click
+        document.querySelectorAll('.artwork-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (!e.target.classList.contains('btn-viewing')) {
+                    openArtworkModal();
+                }
+            });
+        });
+        
+        // Booking form submission
+        document.getElementById('booking-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your booking request!\nWe will contact you within 24 hours to confirm your appointment.');
+            closeModal();
+            this.reset();
+        });
+    });
+    
+    // Image gallery functionality
+    function changeImage(thumb, src) {
+        document.getElementById('modal-main-img').src = src;
+        document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+    }
+</script>
+
+</body>
+</html>

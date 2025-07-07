@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtVista Gallery | Connect</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Open+Sans:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --cream: #fffbe6;
+            --charcoal: #3b2f2f;
+            --gold: #d4a017;
+            --terracotta: #8b5e3c;
+            --gray: #e8e8e8;
+            --mustard: #f5e050;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+            padding-top: 80px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Lora', serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Consistent Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(255, 251, 230, 0.95);
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            font-weight: 600;
+            position: relative;
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover:after {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: var(--gold);
+        }
+
+        /* Connect Hero */
+        .connect-hero {
+            height: 300px;
+            background: linear-gradient(rgba(59, 47, 47, 0.8), rgba(59, 47, 47, 0.8)), 
+                        url('https://images.unsplash.com/photo-1482163129820-71e9b8871bc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .connect-hero h1 {
+            font-size: 3rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Connect Container */
+        .connect-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            padding: 0 10% 5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-form h2 {
+            margin-bottom: 1.5rem;
+            color: var(--charcoal);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .contact-form h2:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background-color: var(--gold);
+            bottom: 0;
+            left: 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Open Sans', sans-serif;
+            transition: border 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: var(--gold);
+            color: var(--charcoal);
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--mustard);
+            transform: translateY(-2px);
+        }
+
+        /* Visit Info */
+        .visit-info {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .visit-info h2 {
+            margin-bottom: 1.5rem;
+            color: var(--charcoal);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .visit-info h2:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background-color: var(--gold);
+            bottom: 0;
+            left: 0;
+        }
+
+        .info-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .info-item h3 {
+            color: var(--terracotta);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .info-item p {
+            color: #666;
+        }
+
+        .map-container {
+            height: 300px;
+            margin-top: 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .social-connect {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-connect a {
+            color: var(--charcoal);
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-connect a:hover {
+            color: var(--gold);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--charcoal);
+            color: var(--gray);
+            padding: 3rem 10%;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            font-size: 1.2rem;
+            color: var(--gold);
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--mustard);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .connect-container {
+                grid-template-columns: 1fr;
+                padding: 0 5% 5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .connect-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            nav ul {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .logo {
+                margin-bottom: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .connect-hero {
+                height: 200px;
+            }
+
+            .connect-hero h1 {
+                font-size: 2rem;
+            }
+
+            .contact-form,
+            .visit-info {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="logo">Art<span>Vista</span></div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Welcome</a></li>
+                <li><a href="Gallery.html">Gallery</a></li>
+                <li><a href="Our Story.html">Our Story</a></li>
+                <li><a href="Connect.html">Connect</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Connect Hero -->
+    <section class="connect-hero">
+        <h1>Visit & Contact</h1>
+    </section>
+
+    <!-- Main Content -->
+    <div class="connect-container">
+        <!-- Contact Form -->
+        <section class="contact-form">
+            <h2>Schedule a Visit</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Mobile Number</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="interest">Artwork Interest (Optional)</label>
+                    <select id="interest" name="interest">
+                        <option value="">Select an option</option>
+                        <option value="painting">Paintings</option>
+                        <option value="sculpture">Sculptures</option>
+                        <option value="digital">Digital Art</option>
+                        <option value="multiple">Multiple Categories</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">Preferred Date</label>
+                    <input type="date" id="date" name="date">
+                </div>
+                <div class="form-group">
+                    <label for="message">Special Requests</label>
+                    <textarea id="message" name="message"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Inquiry</button>
+            </form>
+        </section>
+
+        <!-- Visit Information -->
+        <section class="visit-info">
+            <h2>Gallery Information</h2>
+            
+            <div class="info-item">
+                <h3>Location</h3>
+                <p>123 Art District Boulevard<br>Cultural Quarter, Dhaka 1212<br>Bangladesh</p>
+            </div>
+            
+            <div class="info-item">
+                <h3>Hours</h3>
+                <p>Tuesday - Saturday: 10AM - 6PM<br>
+                Sunday: 12PM - 5PM<br>
+                Monday: Closed</p>
+            </div>
+            
+            <div class="info-item">
+                <h3>Contact</h3>
+                <p>+880 1234 567890<br>
+                info@artvistagallery.com</p>
+            </div>
+
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.216991627344!2d90.3940148154308!3d23.73857639504938!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8f3d2398e3d%3A0x5a1a920c4b1e1a3d!2sDhaka%2C%20Bangladesh!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+
+            <div class="social-connect">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-pinterest-p"></i></a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+        </div>
+        <p class="copyright">© 2025 ArtVista Gallery. All rights reserved.</p>
+    </footer>
+
+    <!-- Form Validation Script -->
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your inquiry. This is a demo form - in a live site this would connect to a backend service.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
